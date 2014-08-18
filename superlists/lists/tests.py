@@ -78,5 +78,9 @@ class HomePageTest(TestCase):
 # notes:
 # Don't save blank items on every request DONE
 # is POST test too long? DONE
-# displaying ultiple items in the table
+# displaying multiple items in the table
 # support more than one list
+# Adjust model so that items are associated with different lists
+# Add unique URLS for each list
+# Add a URL for creating a new list via POST
+# Add URLs for adding a new item to an existing list via POST

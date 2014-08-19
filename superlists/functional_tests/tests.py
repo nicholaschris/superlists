@@ -3,17 +3,21 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(LiveServerTestCase):
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
+
     def tearDown(self):
         self.browser.quit()
+
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
+
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edith has heard about cool new online to-do app.
@@ -38,8 +42,8 @@ class NewVisitorTest(LiveServerTestCase):
         # When she hits enter, the page updates, and now the page lists
         # "1: Buy Peacock feathers" as an item in to-do list table
         inputbox.send_keys(Keys.ENTER)
-        edit_lists_url = self.browser.current_url
-        self.assertRegex(edit_lists_url, '/lists/.+')
+        edith_lists_url = self.browser.current_url
+        self.assertRegexpMatches(edith_lists_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # There is still a text box inviting her to add another item
@@ -75,7 +79,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Francis gets his own URL
         francis_lists_url = self.browser.current_url
         self.assertRegex(francis_lists_url, '/lists/.+')
-        self.assertNotEqual(francis_lists_url, edit_lists_url)
+        self.assertNotEqual(francis_lists_url, edith_lists_url)
 
         # Again, there is no trace of Edith's list
         page_text = self.browser.find_element_by_tag_name('body').text

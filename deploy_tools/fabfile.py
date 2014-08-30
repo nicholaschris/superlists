@@ -47,6 +47,7 @@ def _update_virtualenv(source_folder):
     run('%s/bin/pip install -r %s/requirements.txt' % (
         virtualenv_folder, source_folder
         )
+    )
 
 
 def _update_static_files(source_folder):

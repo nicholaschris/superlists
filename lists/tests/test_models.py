@@ -58,7 +58,6 @@ class ItemModelsTest(TestCase):
         self.assertEqual(str(item), 'some text')
 
 
-
 class ListModelsTest(TestCase):
 
     def test_get_absolute_url(self):

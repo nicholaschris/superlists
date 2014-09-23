@@ -21,7 +21,6 @@ class HomePageTest(TestCase):
         self.assertIsInstance(response.context['form'], ItemForm)
 
 
-
 class NewListTest(TestCase):
 
     def test_saving_a_POST_request(self):

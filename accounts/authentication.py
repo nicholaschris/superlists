@@ -24,4 +24,4 @@ class PersonaAuthenticationBackend(object):
         try:
             return User.objects.get(email=email)
         except User.DoesNotExist:
-            return None #1
+            return None #1  

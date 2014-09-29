@@ -1,10 +1,9 @@
-import sys
-
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+import sys
+from .server_tools import reset_database
 
-from .server_tools import reset_database  #1
 
 class FunctionalTest(StaticLiveServerTestCase):
 
@@ -12,9 +11,9 @@ class FunctionalTest(StaticLiveServerTestCase):
     def setUpClass(cls):
         for arg in sys.argv:
             if 'liveserver' in arg:
-                cls.server_host = arg.split('=')[1] #2
+                cls.server_host = arg.split('=')[1]
                 cls.server_url = 'http://' + cls.server_host
-                cls.against_staging = True #3
+                cls.against_staging = True
                 return
         super().setUpClass()
         cls.against_staging = False
@@ -25,24 +24,26 @@ class FunctionalTest(StaticLiveServerTestCase):
         if not cls.against_staging:
             super().tearDownClass()
 
+
     def setUp(self):
         if self.against_staging:
-            reset_database(self.server_host) #4
+            reset_database(self.server_host)
+
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
-
     def tearDown(self):
         self.browser.quit()
+
+
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('id_text')
 
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
-
-    def get_item_input_box(self):
-        return self.browser.find_element_by_id('id_text')
 
 
     def wait_for_element_with_id(self, element_id):
@@ -64,7 +65,3 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.wait_for_element_with_id('id_login')
         navbar = self.browser.find_element_by_css_selector('.navbar')
         self.assertNotIn(email, navbar.text)
-
-
-if __name__ == "__main__":
-    unittest.main(warnings='ignore')

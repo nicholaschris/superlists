@@ -4,6 +4,7 @@ import random
 
 
 REPO_URL = 'https://github.com/nicholaschris/superlists.git'
+env.user = 'nick'
 
 def deploy():
     site_folder = '/home/%s/sites/%s' % (env.user, env.host)

@@ -2,9 +2,8 @@ from fabric.contrib.files import append, exists, sed
 from fabric.api import env, local, run
 import random
 
-env.user = "nick"
 
-REPO_URL = 'https://github.com/hjwp/book-example.git'
+REPO_URL = 'https://github.com/nicholaschris/superlists.git'
 
 def deploy():
     site_folder = '/home/%s/sites/%s' % (env.user, env.host)
